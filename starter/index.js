@@ -41,7 +41,19 @@ const server = http.createServer((req, res) => {
         res.end('hello from the server! It is over view');
     else if (pathName === '/product') {
         res.end('hello from the server! It is prod');
-    } else {
+    }
+    else if (pathName === '/api') {
+        fs.readFile(`${__dirname}/dev-data/data.json`, 'utf-8', (err, data) => {
+            res.writeHead(200, {
+                'Content-type': 'application/json'
+            })
+            // const productDat = JSON.parse(data);
+            res.end(data);
+            // console.log("🚀 ~ file: index.js:48 ~ fs.readFile ~ productDat:", productDat)
+        });
+
+    }
+    else {
         res.writeHead(404, {
             'Content-type': "text-html",
             'myHeader': 'hellow-world'
