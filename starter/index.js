@@ -3,7 +3,7 @@ const http = require('http');
 const url = require('url');
 
 const replaceTemplate = require('./modules/replaceTemplate')
-
+const slugify = require("slugify");
 
 
 // // blocking synchronous way
@@ -41,6 +41,7 @@ const tempCard = fs.readFileSync(
     `${__dirname}/templates/template-card.html`,
     'utf-8'
 );
+
 const tempProduct = fs.readFileSync(
     `${__dirname}/templates/template-product.html`,
     'utf-8'
@@ -49,6 +50,9 @@ const tempProduct = fs.readFileSync(
 const data = fs.readFileSync(`${__dirname}/dev-data/data.json`, 'utf-8');
 const dataObj = JSON.parse(data);
 
+const slugs = dataObj.map(item => slugify(item.productName, { lower: true }));
+
+console.log(slugs)
 const server = http.createServer((req, res) => {
 
     const { pathname, query } = url.parse(req.url, true);
